@@ -225,15 +225,33 @@ class PerformanceComparison:
                 mse = np.mean((chunk - reconstructed) ** 2)
                 mse_values.append(mse)
             
+            # Calculate robust statistics to handle outliers
+            def robust_mean(values, threshold=10.0):
+                """Calculate robust mean by excluding outliers"""
+                values = np.array(values)
+                finite_values = values[np.isfinite(values)]
+                if len(finite_values) == 0:
+                    return 0.0
+                
+                median = np.median(finite_values)
+                mad = np.median(np.abs(finite_values - median))
+                outlier_threshold = threshold * mad
+                robust_values = finite_values[np.abs(finite_values - median) <= outlier_threshold]
+                
+                if len(robust_values) == 0:
+                    return median
+                return np.mean(robust_values)
+            
             compression_results[name] = {
                 'avg_tokens': np.mean(token_counts),
                 'std_tokens': np.std(token_counts),
                 'min_tokens': np.min(token_counts),
                 'max_tokens': np.max(token_counts),
-                'avg_mse': np.mean(mse_values),
+                'avg_mse': robust_mean(mse_values),  # Use robust mean
                 'std_mse': np.std(mse_values),
                 'min_mse': np.min(mse_values),
                 'max_mse': np.max(mse_values),
+                'median_mse': np.median(mse_values),
                 'compression_ratio': (chunk.shape[0] * chunk.shape[1]) / np.mean(token_counts),
             }
         

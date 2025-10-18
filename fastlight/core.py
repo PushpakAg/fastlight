@@ -181,7 +181,13 @@ class FASTLight:
         # 3. Reshape to (D, k)
         expected_size = action_dim * self.n_coeffs
         if len(values) < expected_size:
+            # Pad with zeros if we don't have enough values
             values.extend([0] * (expected_size - len(values)))
+        elif len(values) > expected_size:
+            # Truncate if we have too many values (shouldn't happen with proper encoding)
+            values = values[:expected_size]
+        
+        # Ensure we have exactly the expected number of values
         values = values[:expected_size]
         
         quantized = np.array(values).reshape(action_dim, self.n_coeffs).T

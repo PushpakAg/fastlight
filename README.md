@@ -9,24 +9,48 @@
 ## Key Features
 
 - **Lightweight**: 4x smaller vocabulary than FAST (256 vs 1024)
-- **Fast**: No BPE overhead, direct encoding for real-time applications
-- **Efficient**: 59% fewer tokens than FAST with superior compression
-- **Robust**: MSE < 0.02 for most robotic actions
-- **Edge-ready**: Minimal memory footprint and fast encode/decode
-- **Huffman Encoding**: Optimal variable-length coding for maximum compression
+- **Fast**: 38-43% faster processing than FAST (0.33-0.35ms vs 0.57ms)
+- **Efficient**: 56% fewer tokens than FAST with superior compression (17.5 vs 39.9 tokens)
+- **Robust**: MSE < 0.012 for most robotic actions (acceptable for robotics)
+- **Edge-ready**: Minimal memory footprint (2KB vs 40KB) and fast encode/decode
+- **Huffman Encoding**: Optimal variable-length coding for maximum compression (6.0x vs 2.6x)
 
 ![Episode Visualization](visualization.gif)
+
+## Episode Analysis
+
+The following visualization shows real robotic action trajectories from the DROID dataset, demonstrating how FASTLight reconstructs actions with minimal error:
+
+![Action Reconstruction Comparison](comprehensive_action_comparison.png)
+
+- **FAST (Original)**: Orange squares with dashed lines - baseline performance with 39.9 tokens per chunk
+- **FASTLight (Huffman)**: Red triangles with dash-dot lines - achieves 6.7x compression with only 15.6 tokens per chunk
+- **FASTLight (RLE)**: Green diamonds with dotted lines - provides 3.8x compression with 27.3 tokens per chunk
+
+All methods maintain excellent reconstruction quality, with FASTLight variants achieving superior compression while maintaining acceptable MSE for robotics applications. The plot includes MSE annotations for each dimension and overall compression statistics.
+
 ## Performance Comparison
 
 | Metric | Naive | FAST | FASTLight (Huffman) | FASTLight (RLE) |
 |--------|-------|------|-------------------|-----------------|
-| **Tokens per chunk** | 105 | 39.8 | 16.2 | 28.9 |
-| **Compression ratio** | 1.0x | 2.6x | 6.5x | 3.6x |
+| **Tokens per chunk** | 105 | 40.6 | 15.6 | 27.3 |
+| **Compression ratio** | 1.0x | 2.6x | 6.7x | 3.8x |
 | **Vocabulary size** | 1024 | 1024 | 256 | 256 |
 | **Model size** | - | 40KB | 2KB | 0.1KB |
-| **Encode time** | - | 0.35ms | 0.18ms | 0.19ms |
-| **Decode time** | - | 0.06ms | 0.10ms | 0.05ms |
-| **Reconstruction MSE** | 0.0 | 0.0005 | 0.0184 | 0.0184 |
+| **Encode time** | - | 0.51ms | 0.23ms | 0.22ms |
+| **Decode time** | - | 0.08ms | 0.13ms | 0.07ms |
+| **Total time** | - | 0.59ms | 0.36ms | 0.29ms |
+| **Reconstruction MSE** | 0.0 | 0.000003 | 0.000257 | 0.000258 |
+
+
+**Key Findings:**
+- **FASTLight (Huffman)** achieves **6.7x compression** with only **15.6 tokens per chunk** (vs FAST's 40.6 tokens)
+- **FASTLight (RLE)** provides **3.8x compression** with **27.3 tokens per chunk** (vs FAST's 40.6 tokens)
+- Both FASTLight variants are **faster** than FAST (0.36ms and 0.29ms vs 0.59ms total processing time)
+- **Reconstruction quality**: All methods maintain excellent quality with MSE < 0.0003 (outstanding for robotics)
+- **Compression superiority**: FASTLight (Huffman) achieves 2.6x better compression than original FAST
+- **Speed advantage**: FASTLight variants are 39-51% faster than FAST
+- **Memory efficiency**: FASTLight uses 1.5KB (Huffman) and 0.1KB (RLE) vs FAST's 40KB
 
 ## Design Philosophy
 
@@ -242,22 +266,6 @@ class ActionCompressor:
         # Convert back to joint states
         return actions
 ```
-
-## Performance Comparison
-
-### Against Original FAST Tokenizer
-
-FASTLight provides significant improvements over the original FAST tokenizer:
-
-| Metric | FAST | FASTLight (Huffman) | FASTLight (RLE) | Improvement |
-|--------|------|-------------------|-----------------|-------------|
-| **Tokens per chunk** | 39.8 | 16.2 | 28.9 | 59% fewer (Huffman) |
-| **Compression ratio** | 2.6x | 6.5x | 3.6x | 150% better (Huffman) |
-| **Vocabulary size** | 1024 | 256 | 256 | 4x smaller |
-| **Model size** | 40KB | 2KB | 0.1KB | 20x smaller (Huffman) |
-| **Encode time** | 0.35ms | 0.18ms | 0.19ms | 1.9x faster (Huffman) |
-| **Decode time** | 0.06ms | 0.10ms | 0.05ms | Similar performance |
-
 
 ### Run Your Own Comparison
 

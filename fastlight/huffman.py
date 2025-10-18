@@ -150,7 +150,7 @@ class HuffmanEncoder:
         
         while i < len(bitstring):
             # Check for escape code
-            if bitstring[i:i+8] == "11111111":
+            if i + 8 <= len(bitstring) and bitstring[i:i+8] == "11111111":
                 # Next 16 bits are raw value
                 i += 8
                 if i + 16 <= len(bitstring):
@@ -162,10 +162,12 @@ class HuffmanEncoder:
                     symbols.append(val)
                     i += 16
                 else:
+                    # Not enough bits for 16-bit value, break
                     break
             else:
                 # Traverse Huffman tree
                 node = self.decode_tree
+                start_i = i
                 while not node.is_leaf() and i < len(bitstring):
                     if bitstring[i] == '0':
                         node = node.left
@@ -175,6 +177,9 @@ class HuffmanEncoder:
                 
                 if node.is_leaf():
                     symbols.append(node.value)
+                else:
+                    # Incomplete tree traversal, break
+                    break
         
         return symbols
     
