@@ -159,11 +159,8 @@ Thumbs.db
 *_analysis.png
 *_results.png
 *_comparison.png
-*_reconstruction.png
 episode_*.png
 fast_*.png
-reconstruction_*.png
-action_*.png
 dct_*.png
 
 # Data files
