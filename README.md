@@ -21,7 +21,7 @@
 
 The following visualization shows real robotic action trajectories from the DROID dataset, demonstrating how FASTLight reconstructs actions with minimal error:
 
-![Action Reconstruction Comparison](comprehensive_action_comparison.png)
+![Action Reconstruction Comparison](action_reconstruction.png)
 
 - **FAST (Original)**: Orange squares with dashed lines - baseline performance with 39.9 tokens per chunk
 - **FASTLight (Huffman)**: Red triangles with dash-dot lines - achieves 6.7x compression with only 15.6 tokens per chunk
