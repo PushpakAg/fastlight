@@ -15,12 +15,7 @@
 - **Edge-ready**: Minimal memory footprint and fast encode/decode
 - **Huffman Encoding**: Optimal variable-length coding for maximum compression
 
-## Demo
-
 ![Episode Visualization](visualization.gif)
-
-*Real multi-camera robotic episode data from DROID dataset that FASTLight can efficiently compress (40 frames, 128x128 resolution)*
-
 ## Performance Comparison
 
 | Metric | Naive | FAST | FASTLight (Huffman) | FASTLight (RLE) |
