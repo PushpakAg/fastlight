@@ -23,10 +23,6 @@ The following visualization shows real robotic action trajectories from the DROI
 
 ![Action Reconstruction Comparison](action_reconstruction.png)
 
-- **FAST (Original)**: Orange squares with dashed lines - baseline performance with 39.9 tokens per chunk
-- **FASTLight (Huffman)**: Red triangles with dash-dot lines - achieves 6.7x compression with only 15.6 tokens per chunk
-- **FASTLight (RLE)**: Green diamonds with dotted lines - provides 3.8x compression with 27.3 tokens per chunk
-
 All methods maintain excellent reconstruction quality, with FASTLight variants achieving superior compression while maintaining acceptable MSE for robotics applications. The plot includes MSE annotations for each dimension and overall compression statistics.
 
 ## Performance Comparison
@@ -266,28 +262,6 @@ class ActionCompressor:
         # Convert back to joint states
         return actions
 ```
-
-### Run Your Own Comparison
-
-```bash
-# Quick comparison
-fastlight-compare
-
-# Use real DROID dataset
-python -m fastlight.examples.fast_comparison --real-data --episodes 10
-
-# Detailed analysis with custom data
-python -m fastlight.examples.fast_comparison --episodes 50 --save-plot detailed_comparison.png
-```
-
-The comparison script will:
-- Load the original FAST tokenizer from Physical Intelligence
-- Use real DROID dataset or synthetic data for testing
-- Test compression ratios and token counts
-- Benchmark encoding/decoding speeds
-- Analyze memory usage and model sizes
-- Evaluate edge device suitability
-- Generate comprehensive reports and visualizations
 
 ## API Reference
 
