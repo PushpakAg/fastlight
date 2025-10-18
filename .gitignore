@@ -145,7 +145,6 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-*.png
 *.jpg
 *.jpeg
 *.svg
