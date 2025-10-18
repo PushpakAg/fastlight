@@ -248,23 +248,6 @@ class ActionCompressor:
         return actions
 ```
 
-## Testing
-
-Run the test suite:
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=fastlight
-
-# Run specific test categories
-pytest -m unit          # Unit tests only
-pytest -m integration   # Integration tests only
-pytest -m "not slow"    # Skip slow tests
-```
-
 ## Performance Comparison
 
 ### Against Original FAST Tokenizer
@@ -279,8 +262,7 @@ FASTLight provides significant improvements over the original FAST tokenizer:
 | **Model size** | 40KB | 2KB | 0.1KB | 20x smaller (Huffman) |
 | **Encode time** | 0.35ms | 0.18ms | 0.19ms | 1.9x faster (Huffman) |
 | **Decode time** | 0.06ms | 0.10ms | 0.05ms | Similar performance |
-| **Memory usage** | High | Low | Very Low | Edge ready |
-| **Edge suitability** | 70/100 | 79/100 | 79/100 | Production ready |
+
 
 ### Run Your Own Comparison
 
@@ -346,34 +328,9 @@ visualize_reconstruction(original, reconstructed, title, save_path)
 create_sample_data(n_episodes, time_horizon, action_dim, seed) -> np.ndarray
 ```
 
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-
-```bash
-git clone https://github.com/PushpakAg/fastlight.git
-cd fastlight
-pip install -e ".[dev]"
-pre-commit install
-```
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- **Physical Intelligence** for the original FAST tokenizer
-- **Hugging Face** for the transformers library
-- **SciPy** for DCT implementation
-- **NumPy** for numerical computing
-
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/PushpakAg/fastlight/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/PushpakAg/fastlight/discussions)
 
 ## Related Projects
 
