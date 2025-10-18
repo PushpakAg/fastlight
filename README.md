@@ -17,7 +17,7 @@
 
 ## Demo
 
-![Episode Visualization](episode_visualization.gif)
+![Episode Visualization](visualization.gif)
 
 *Real multi-camera robotic episode data from DROID dataset that FASTLight can efficiently compress (40 frames, 128x128 resolution)*
 
