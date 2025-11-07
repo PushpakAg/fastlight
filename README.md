@@ -29,9 +29,8 @@ All methods maintain excellent reconstruction quality, with FASTLight variants a
 
 | Metric | Naive | FAST | FASTLight (Huffman) | FASTLight (RLE) |
 |--------|-------|------|-------------------|-----------------|
-| **Tokens per chunk** | 105 | 40.6 | 15.6 | 27.3 |
+| **Tokens per chunk** | 105 | 40 | 15 | 27 |
 | **Compression ratio** | 1.0x | 2.6x | 6.7x | 3.8x |
-| **Vocabulary size** | 1024 | 1024 | 256 | 256 |
 | **Model size** | - | 40KB | 2KB | 0.1KB |
 | **Encode time** | - | 0.51ms | 0.23ms | 0.22ms |
 | **Decode time** | - | 0.08ms | 0.13ms | 0.07ms |
